@@ -20,25 +20,67 @@ const svg2_RENAME = d3.select("#lineChart2")
 
 // (If applicable) Tooltip element for interactivity
 // const tooltip = ...
+const dropdown = d3.select("body")
+    .insert("select", ":first-child") // Insert at the top
+    .attr("id", "seasonDropdown");
 
 // 2.a: LOAD...
-d3.csv("YOUR_CSV_NAME.csv").then(data => {
-    // 2.b: ... AND TRANSFORM DATA
+d3.csv("final_form_data.csv").then(data => {
+    data.forEach(d => {
+        d.Event_Year = new Date(d.Event_Date).getFullYear();
+    });
 
-    // 3.a: SET SCALES FOR CHART 1
+    const seasons = [...new Set(data.map(d => d.Season))];
 
+    dropdown.selectAll("option")
+        .data(seasons)
+        .enter()
+        .append("option")
+        .text(d => d)
+        .attr("value", d => d);
 
-    // 4.a: PLOT DATA FOR CHART 1
+    function updateChart(selectedSeason) {
+        const filteredData = data.filter(d => d.Season === selectedSeason);
+        const yearCounts = d3.rollup(filteredData, v => v.length, d => d.Event_Year);
 
+        const dataset = Array.from(yearCounts, ([year, count]) => ({ year, count }))
+            .sort((a, b) => a.year - b.year);
 
-    // 5.a: ADD AXES FOR CHART 1
+        const xScale = d3.scaleLinear()
+            .domain(d3.extent(dataset, d => d.year))
+            .range([0, width]);
 
+        const yScale = d3.scaleLinear()
+            .domain([0, d3.max(dataset, d => d.count)])
+            .range([height, 0]);
 
-    // 6.a: ADD LABELS FOR CHART 1
+        svg1_RENAME.selectAll("*").remove();
 
+        svg1_RENAME.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(xScale).tickFormat(d3.format("d")));
 
-    // 7.a: ADD INTERACTIVITY FOR CHART 1
+        svg1_RENAME.append("g")
+            .call(d3.axisLeft(yScale));
+
+        const line = d3.line()
+            .x(d => xScale(d.year))
+            .y(d => yScale(d.count));
+
+        svg1_RENAME.append("path")
+            .datum(dataset)
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 2)
+            .attr("d", line);
+
     
+
+    }
+    updateChart(seasons[0]);
+    dropdown.on("change", function () {
+        updateChart(this.value);
+    });
 
     // ==========================================
     //         CHART 2 (if applicable)
