@@ -10,36 +10,34 @@
 <body class="vertical-container">
     <!-- HEADER -->
     <div class="item">
-        <h1>AIrcarf Incidents</h1>
+        <h1>Aircraft Incidents</h1>
         <p><strong>Author(s):</strong> Kibret Ogbai</p>
-        <p><strong>Documentation:</strong> <a href="YOUR LINK HERE" target="_blank">Edit link in "index.html" on line 13. Give your document "Viewer" access to UW in share settings.</a></p>
+        <p><strong>Documentation:</strong> <a href="https://docs.google.com/document/d/1PNcxRvgYI9wlmqcFsWxyrV9VYK_m6LdzIIGmDhk2neY/edit?usp=sharing" target="_blank">Seasonal Aircraft Incident Documentation</a></p>
     </div>
     
     <!-- INTERACTIVE WIDGETS -->
     <div class="item horizontal-container">
         <div class="item">
-            <h3>Select Seasons</h3>
-            <div id="seasonCheckboxes" class="checkbox-group">
-                <label><input type="checkbox" class="season-checkbox" value="Winter" checked> Winter</label>
-                <label><input type="checkbox" class="season-checkbox" value="Spring" checked> Spring</label>
-                <label><input type="checkbox" class="season-checkbox" value="Summer" checked> Summer</label>
-                <label><input type="checkbox" class="season-checkbox" value="Fall" checked> Fall</label>
-            </div>
+            <!-- Widget 1 title -->
+            <h3>Select Season</h3>
+            <!-- Move the dropdown to HTML -->
+            <select id="seasonDropdown">
+                <option value="Winter" selected>Winter</option>
+                <option value="Spring">Spring</option>
+                <option value="Summer">Summer</option>
+                <option value="Fall">Fall</option>
+            </select>
         </div>
+
+        <!-- DELETE THE FOLLOWING DIV IF YOU ONLY HAVE 1 WIDGET. -->
+        
     </div>
 
-    <!-- CHART(S) -->
     <div class="item chart-container">
-        <h2>[Chart 1 Title]</h2>
+        <h2>Seasonal Aircraft Incidents</h2>
         <svg id="lineChart1" width="900" height="400"></svg> <!-- If you change this ID name, you must change it in main.js too -->
     </div>
-    <!-- DELETE THE FOLLOWING DIV IF YOU ONLY HAVE 1 CHART. -->
-    <!-- <div class="item chart-container">
-        <h2>[Chart 2 Title]</h2>
-        <svg id="lineChart2" width="900" height="400"></svg>
-    </div> -->
+    
     <script src="main.js"></script>
 </body>
 </html>
-
-<!-- Starter code polished with assistance from DeepSeek. -->
